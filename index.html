@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!-- 待办事项应用主页面 -->
+<html lang="en">
+<head>
+    <!-- 页面元数据和资源引入 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/favicon.ico" > 
+</head>
+<body>
+    <!-- 页面主体内容 -->
+    <h1>我的待办事项</h1>
+    <!-- 待办事项输入表单 -->
+    <form id="todo-form">
+    <input id="todo-input" type="text"placeholder='请输入待办事项'required>
+    <!-- <button type="submit">添加</button> -->
+    </form>
+    <!-- 待办事项列表容器，用于动态展示和管理用户的待办任务 -->
+    <ul id="todo-list"></ul> 
+<!-- 引入待办事项功能逻辑脚本 -->
+<script src="js/app.js"></script>    
+</body>
+</html>

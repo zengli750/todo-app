@@ -1,0 +1,46 @@
+/* CSS Reset - 清除默认浏览器样式，确保跨浏览器一致性 */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* 全局页面样式 - 设置背景、字体和内边距 */
+body{
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial, Helvetica, sans-serif;
+    background: #f5f7fa;
+    color: #333;
+    padding: 40px 20px;
+    line-height: 1.5;
+}
+/* 标题样式 - 设置底部边距和居中对齐 */
+h1{
+    margin-bottom: 20px;
+    text-align: center;
+}
+/* 表单容器样式 - 使用Flex布局实现水平居中 */
+#todo-form{
+    display: flex;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+/* 输入框样式 - 设置宽度、内边距和边框样式 */
+#todo-input{
+    width: 280px;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+/* 待办列表容器样式 - 清除默认列表样式并设置最大宽度 */
+#todo-list{
+list-style: none;
+margin: 0 auto;
+max-width: 400;
+}
+/* 待办项样式 - 设置背景、边距、阴影和边框圆角 */
+#todo-list li{
+    background: #fff;
+    margin-bottom: 8px;
+    padding: 10px 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-radius: 4px;
+}
