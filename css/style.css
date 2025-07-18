@@ -48,3 +48,12 @@ li.done span{
     text-decoration:line-through;
     color: #999;
 }
+#counter{
+    text-align:center;
+    margin:10px 0;
+}
+#clear-all{
+    display:block;
+    margin:0 auto 20px;
+    padding:6px 14px;
+}
