@@ -8,6 +8,8 @@
 const form = document.getElementById('todo-form')
 const input = document.getElementById('todo-input') // 输入框元素 - 用户输入待办事项文本
 const list = document.getElementById('todo-list') // 列表容器 - 展示所有待办事项
+const countSpan=document.getElementById('count')
+const clearBtn=document.getElementById('clear-all')
 // 数据存储
 // 本地存储键名 - 用于标识待办事项数据在localStorage中的存储位置
 const STORAGE_KEY='todo-day2'
@@ -37,9 +39,16 @@ function renderTodos(){
     li.innerHTML=`
     <input type="checkbox" data-index="${index}" ${item.done ? 'checked':''}>
     <span>${item.text}</span>
+    <botton data-del='${index}'>❌</button>
     `;
     list.appendChild(li); // 将列表项添加到列表容器（list，通常是<ul>或<ol>）
+    updateCounter();
 });
+}
+function updateCounter(){
+    const left =todos.filter(t =>!t.done).length;
+    countSpan.textContent =left;
+    clearBtn.hidden=todos.length ===0;
 }
 /**
  * 处理表单提交事件
@@ -56,7 +65,7 @@ form.addEventListener('submit',(e)=>{
     e.preventDefault()
     const text=input.value.trim()
     if(!text) return
-    todos.push({text,done:false})
+    todos.push({text,done:false})　//done: false 表示该待办事项的完成状态为 “未完成”（false 代表未完成，通常用 true 表示已完成）
     input.value=''
     saveTodos()
     renderTodos()
@@ -79,6 +88,20 @@ list.addEventListener('change', e=>{
     todos[idx].done=e.target.checked;
     saveTodos();
     renderTodos();
+})
+list.addEventListener('click',e=>{
+    if (!e.target.matchs('[data-del]'))return;
+    const idx= e.target.dataset.del;
+    todos.splice(idx,1)
+    saveTodos()
+    renderTodos()
+})
+clearBtn.addEventListener('click',()=>{
+    if(confirm('确定清空所有入任务？')){
+        todos=[];
+        saveTodos();
+        renderTodos();
+    }
 })
 // 初始化渲染 - 页面加载完成后首次渲染待办事项列表
 renderTodos();
