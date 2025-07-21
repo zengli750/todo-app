@@ -35,7 +35,9 @@ function renderTodos(){
     list.innerHTML='';
     todos.forEach((item,index)=> {
     const li = document.createElement('li'); // 创建一个列表项元素
-    li.className =item.done ?'done':'';
+    li.draggable = true;
+    li.dataset.index = index;
+    li.className = item.done ? 'todo-item done' : 'todo-item';
     li.innerHTML=`
     <input type="checkbox" data-index="${index}" ${item.done ? 'checked':''}>
     <span>${item.text}</span>
@@ -116,6 +118,21 @@ clearBtn.addEventListener('click',()=>{
         saveTodos();
         renderTodos();
     }
+})
+let draggedIndex=null;
+list.addEventListener('dragstart',e=>{
+    draggedIndex=+e.target.dataset.index;
+    e.target.classList.add('dragging')
+});
+list.addEventListener('dragover',e=>e.preventDefault())
+list.addEventListener('drop',e=>{
+    e.preventDefault();
+    const targetIndex= +e.target.closest('.todo-item').dataset.index;
+    if(targetIndex === undefined||draggedIndex===targetIndex  ) return;
+    const [moved]=todos.splice(draggedIndex,1);
+    todos.splice(targetIndex,0,moved);
+    saveTodos();renderTodos();
+    document.querySelector('.dragging')?.classList.remove('dragging')
 })
 // 初始化渲染 - 页面加载完成后首次渲染待办事项列表
 renderTodos();
