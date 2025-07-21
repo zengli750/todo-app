@@ -8,8 +8,8 @@
 const form = document.getElementById('todo-form')
 const input = document.getElementById('todo-input') // 输入框元素 - 用户输入待办事项文本
 const list = document.getElementById('todo-list') // 列表容器 - 展示所有待办事项
-const countSpan=document.getElementById('count')
-const clearBtn=document.getElementById('clear-all')
+const countSpan=document.getElementById('count') // 计数器显示元素 - 展示剩余未完成事项数量
+const clearBtn=document.getElementById('clear-all') // 清空按钮 - 用于删除所有待办事项
 // 数据存储
 // 本地存储键名 - 用于标识待办事项数据在localStorage中的存储位置
 const STORAGE_KEY='todo-day2'
@@ -39,12 +39,18 @@ function renderTodos(){
     li.innerHTML=`
     <input type="checkbox" data-index="${index}" ${item.done ? 'checked':''}>
     <span>${item.text}</span>
-    <botton data-del='${index}'>❌</button>
+    <button data-del='${index}'>❌</button>
     `;
-    list.appendChild(li); // 将列表项添加到列表容器（list，通常是<ul>或<ol>）
-    updateCounter();
+    list.appendChild(li); // 将列表项添加到列表容器（list，通常是<ul>或<ol>） 
 });
+ updateCounter();
+ document.getElementById('empty-tip').hidden=todos.length !== 0;
 }
+/**
+ * 更新未完成事项计数器
+ * 功能：计算并显示剩余未完成的待办事项数量
+ * 同时控制清空按钮的显示/隐藏状态
+ */
 function updateCounter(){
     const left =todos.filter(t =>!t.done).length;
     countSpan.textContent =left;
@@ -89,13 +95,21 @@ list.addEventListener('change', e=>{
     saveTodos();
     renderTodos();
 })
+/**
+ * 处理待办项删除事件
+ * 功能：监听删除按钮点击，从数组中移除对应待办项
+ */
 list.addEventListener('click',e=>{
-    if (!e.target.matchs('[data-del]'))return;
+    if (!e.target.matches('[data-del]'))return;
     const idx= e.target.dataset.del;
     todos.splice(idx,1)
     saveTodos()
     renderTodos()
 })
+/**
+ * 处理清空全部事件
+ * 功能：删除所有待办事项并确认操作
+ */
 clearBtn.addEventListener('click',()=>{
     if(confirm('确定清空所有入任务？')){
         todos=[];

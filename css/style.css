@@ -37,6 +37,7 @@ margin: 0 auto;
 max-width: 400;
 }
 /* 待办项样式 - 设置背景、边距、阴影和边框圆角 */
+/* 待办项样式 - 设置背景、边距、阴影和边框圆角 */
 #todo-list li{
     background: #fff;
     margin-bottom: 8px;
@@ -44,16 +45,33 @@ max-width: 400;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     border-radius: 4px;
 }
+/* 已完成待办项样式 - 添加删除线和灰色文本 */
 li.done span{
     text-decoration:line-through;
     color: #999;
 }
+/* 计数器样式 - 居中显示并设置外边距 */
 #counter{
     text-align:center;
     margin:10px 0;
 }
+/* 清空按钮样式 - 居中显示并设置内边距 */
 #clear-all{
     display:block;
     margin:0 auto 20px;
     padding:6px 14px;
+}
+#clear-all[hidden]{
+    display:none !important;
+}
+button:hover{transform:scale(1.05)}
+input[type=checkbox]:checked+span{color:#27ae60;}
+p{
+    text-align: center;
+}
+@media(max-width:600px){
+   body{padding:20px 12px;} 
+   #todo-input{width:100%;margin-bottom:10px;}
+   #todo-form{flex-direction: column;}
+   li{font-size:16px}
 }
