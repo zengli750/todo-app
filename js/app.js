@@ -135,10 +135,44 @@ list.addEventListener('drop',e=>{
     document.querySelector('.dragging')?.classList.remove('dragging')
 })
 // 移动端补丁：阻止长按菜单 / 滚动
+l/* === 手机拖拽补丁 === */
+let draggedEl = null;
+
+['touchstart', 'touchmove', 'touchend'].forEach(evt =>
+  list.addEventListener(evt, e => e.preventDefault(), { passive: false })
+);
+
 list.addEventListener('touchstart', e => {
-  e.target.style.webkitTouchCallout = 'none'; // 禁菜单
-  e.preventDefault(); // 禁滚动
-}, { passive: false });
+  const li = e.target.closest('.todo-item');
+  if (!li) return;
+  draggedEl = li;
+  draggedIndex = +li.dataset.index;
+  li.classList.add('dragging');
+});
+
+list.addEventListener('touchmove', e => {
+  if (!draggedEl) return;
+  const touch = e.touches[0];
+  const underEl = document.elementFromPoint(touch.clientX, touch.clientY);
+  const targetLi = underEl?.closest('.todo-item');
+  if (targetLi && targetLi !== draggedEl) {
+    const targetIndex = +targetLi.dataset.index;
+    const direction = targetIndex > draggedIndex ? 'afterend' : 'beforebegin';
+    list.insertBefore(draggedEl, direction === 'afterend' ? targetLi.nextSibling : targetLi);
+  }
+});
+
+list.addEventListener('touchend', () => {
+  if (!draggedEl) return;
+  // 重新计算新顺序
+  const newOrder = [...list.children].map(li => +li.dataset.index);
+  const newTodos = newOrder.map(i => todos[i]);
+  todos = newTodos;
+  saveTodos();
+  renderTodos();
+  draggedEl.classList.remove('dragging');
+  draggedEl = null;
+});
 // 初始化渲染 - 页面加载完成后首次渲染待办事项列表
 renderTodos();
 
