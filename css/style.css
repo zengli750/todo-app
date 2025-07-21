@@ -69,7 +69,7 @@ input[type=checkbox]:checked+span{color:#27ae60;}
 p{
     text-align: center;
 }
-.todo-item{cursor:grab;transition:transform .2s; user-select: none; }
+.todo-item{cursor:grab;transition:transform .2s; user-select: none; touch-action: none; -webkit-user-select: none; }
 .todo-item.dragging{opacity:0.4;transform: scale(1.02);}
 @media(max-width:600px){
    body{padding:20px 12px;} 

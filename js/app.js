@@ -134,6 +134,11 @@ list.addEventListener('drop',e=>{
     saveTodos();renderTodos();
     document.querySelector('.dragging')?.classList.remove('dragging')
 })
+// 移动端补丁：阻止长按菜单 / 滚动
+list.addEventListener('touchstart', e => {
+  e.target.style.webkitTouchCallout = 'none'; // 禁菜单
+  e.preventDefault(); // 禁滚动
+}, { passive: false });
 // 初始化渲染 - 页面加载完成后首次渲染待办事项列表
 renderTodos();
 
